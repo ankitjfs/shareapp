@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  resource_id: MyString
+  integer: MyString
+  user_id: MyString
+  integer: MyString
+  from_date: 2024-01-07 22:40:16
+  end_date: 2024-01-07 22:40:16
+  status: 1
+
+two:
+  resource_id: MyString
+  integer: MyString
+  user_id: MyString
+  integer: MyString
+  from_date: 2024-01-07 22:40:16
+  end_date: 2024-01-07 22:40:16
+  status: 1

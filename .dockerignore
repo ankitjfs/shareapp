@@ -1,0 +1,5 @@
+.git
+.dockerignore
+.env
+src/vendor/bundle/
+src/tmp/

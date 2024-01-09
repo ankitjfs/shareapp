@@ -1,0 +1,21 @@
+<h1 class="row justify-content-center"> Allotment Requests </h1>
+
+
+<table class="table">
+  <thead>
+  <tr>
+    <th scope="col">Resource name</th>
+    <th scope="col">User name</th>
+    <th scope="col">status</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @user.allotments.each do |allotment| %>
+    <tr>
+      <td><%= allotment.resource.name %></td>
+      <td><%= allotment.user.first_name %></td>
+      <td><%= allotment.status %></td>
+  <% end %>
+  </tbody>
+</table>

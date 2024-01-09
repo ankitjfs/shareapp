@@ -1,0 +1,2 @@
+module ResourceSubscriberHelper
+end

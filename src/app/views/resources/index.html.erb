@@ -1,0 +1,39 @@
+<h1 class="row justify-content-center"> Company Resources </h1>
+
+<h3 class="justify-content-center">
+<%= form_tag("/resources", method: :get) do %>
+  <%= text_field_tag(:search, params[:search]) %>
+    <%= radio_button_tag(:only_personal_resource, params[:only_personal_resource]) %> only personal resource
+    <%= radio_button_tag(:only_company_resource, params[:only_company_resource]) %> only company resource
+    <%= submit_tag("Search") %>
+<% end %>
+  </h3>
+
+<%= button_to "New Resource", add_resource_path, method: :get %>
+<%= button_to "Logout", logout_user_path, method: :get %>
+<%= button_to "Allotment request", get_user_path, method: :get %>
+
+<table class="table">
+  <thead>
+  <tr>
+    <th scope="col">Name</th>
+    <th scope="col">Description</th>
+    <th scope="col">status</th>
+    <th scope="col">owner</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @resources.each do |resource| %>
+    <tr>
+      <td><%= resource.name %></td>
+      <td><%= resource.description %></td>
+      <td><%= resource.status %></td>
+      <td><%= resource.user.first_name %></td>
+      <% if resource.user_id != @current_user.id %>
+        <td if ><%= button_to 'Allocate', {:controller => "allotments", :action => "create", :resource_id => resource.id} , :method=>:post  %></td>
+      <% end %>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

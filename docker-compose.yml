@@ -1,0 +1,64 @@
+version: "3.9"
+
+services:
+
+  mysql:
+    image: mysql:8.0.22
+    restart: always
+    platform: linux/x86_64
+    environment:
+      MYSQL_DATABASE: shareapp
+      MYSQL_ALLOW_EMPTY_PASSWORD: "true"
+    ports:
+      - '3306:3306'
+
+  redis:
+    image: redis:7.0
+    ports:
+      - '6379:6379'
+
+  elasticsearch:
+    image: elasticsearch:8.11.3
+    environment:
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - xpack.security.enrollment.enabled=false
+    ports:
+      - "9300:9300"
+      - "9200:9200"
+
+  shareapp:
+    build:
+      context: .
+    volumes:
+      - ./src:/opt/app
+    depends_on:
+      - mysql
+      - redis
+      - elasticsearch
+    ports:
+      - '8010:8010'
+    env_file:
+      - .env
+
+  sidekiq:
+    build:
+      context: .
+    command: bundle exec sidekiq
+    depends_on:
+      - mysql
+      - redis
+    env_file:
+      - .env
+
+  nginx:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.nginx
+    depends_on:
+      - shareapp
+    ports:
+      - '8020:8020'
+
